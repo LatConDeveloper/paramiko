@@ -39,7 +39,7 @@ if __name__ == '__main__':
     client_2.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     try:
         print("Server B: connecting...")
-        client_2.connect(remote_server_2, username=remote_server_2_username, password="remote")
+        client_2.connect(remote_server_2, username=remote_server_2_username, password=remote_server_2_password)
         print("Server B: connected")
     except paramiko.ssh_exception.AuthenticationException as e:
         print("Invalid Credentials of Server B")
