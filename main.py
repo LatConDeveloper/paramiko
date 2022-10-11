@@ -1,9 +1,8 @@
-import time
 import sys
 
 import paramiko
 from scp import SCPClient
-# python main.py 68.183.27.136 latconsulting.tech erick gerard root LatDev852/ root LatDev852
+# python main.py 68.183.27.136 latconsulting.tech erick gerard root LatDev852/ root LatDev852 /root/log/ /root/log2/
 if __name__ == '__main__':
     # Read in the file
 
@@ -19,6 +18,9 @@ if __name__ == '__main__':
 
         remote_server_2_username = sys.argv[7]
         remote_server_2_password = sys.argv[8]
+
+        first_path_server_2 = sys.argv[9]
+        second_path_server_2 = sys.argv[10]
     except Exception:
         print("Wrong Parameters")
         exit()
@@ -74,6 +76,24 @@ if __name__ == '__main__':
         ftp_client_2.close()
     except FileNotFoundError as e:
         print("Invalid File")
+        exit()
+
+    # cleaning log
+    try:
+        stdin, stdout, stderr = client_2.exec_command('cp  {}* {}'.format(first_path_server_2, second_path_server_2))
+
+        result = stdout.read().decode()
+        print(result)
+    except Exception as e:
+        print("Invalid Paths, could not copy")
+        exit()
+
+    try:
+        stdin, stdout, stderr = client_2.exec_command('rm -rf  {}*'.format(first_path_server_2))
+        result = stdout.read().decode()
+        print(result)
+    except Exception as e:
+        print("Invalid Paths, could not copy")
         exit()
 
     print("Success!!")
